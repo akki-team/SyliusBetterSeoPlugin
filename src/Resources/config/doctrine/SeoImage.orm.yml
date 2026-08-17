@@ -1,5 +1,5 @@
 JoppeDc\SyliusBetterSeoPlugin\Entity\SeoImage:
-    type: entity
+    type: mappedSuperclass
     table: joppedc_seo_image
     oneToOne:
         owner:

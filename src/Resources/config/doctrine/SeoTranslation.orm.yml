@@ -1,5 +1,5 @@
 JoppeDc\SyliusBetterSeoPlugin\Entity\SeoTranslation:
-    type: entity
+    type: mappedSuperclass
     table: joppedc_seo_translation
     oneToOne:
         image:
