@@ -18,61 +18,38 @@ services:
         class: JoppeDc\SyliusBetterSeoPlugin\Form\Type\SeoType
         tags:
             - { name: form.type }
-        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\Seo']
+        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\Seo', ['sylius']]
 
     joppedc_sylius_better_seo_plugin.seo_translation.form.type:
         class: JoppeDc\SyliusBetterSeoPlugin\Form\Type\SeoTranslationType
         tags:
             - { name: form.type }
-        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\SeoTranslation']
+        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\SeoTranslation', ['sylius']]
 
     joppedc_sylius_better_seo_plugin.seo_image.type.form.type:
         class: JoppeDc\SyliusBetterSeoPlugin\Form\Type\SeoImageType
         tags:
             - { name: form.type }
-        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\SeoImage']
+        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\SeoImage', ['sylius']]
 
-    joppedc_sylius_better_seo_plugin.block_event_listener.product.show.head:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@SyliusBetterSeoPlugin/_seo_block.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.product.show.before_images, method: onBlockEvent }
-
-    joppedc_sylius_better_seo_plugin.block_event_listener.product.index.head:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@SyliusBetterSeoPlugin/_seo_block.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.taxon.header.before, method: onBlockEvent }
-
-    joppedc_sylius_better_seo_plugin.block_event_listener.productpage.layout.structured_data:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@SyliusBetterSeoPlugin/_structured_data.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.product.show.before_images, method: onBlockEvent }
-
-    joppedc_sylius_better_seo_plugin.block_event_listener.admin.taxon.seo.update:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@SyliusBetterSeoPlugin/Admin/Taxon/_seo_form.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.taxon.update.form, method: onBlockEvent }
-
-    joppedc_sylius_better_seo_plugin.block_event_listener.admin.taxon.seo.create:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@SyliusBetterSeoPlugin/Admin/Taxon/_seo_form.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.taxon.create.form, method: onBlockEvent }
-
-    joppedc_sylius_better_seo_plugin.block_event_listener.admin.seo.javascript:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@SyliusBetterSeoPlugin/_javascript.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.javascripts, method: onBlockEvent }
+    # La couche d'affichage du plugin reposait sur les « template events » de Sylius 1 :
+    # six services `Sylius\Bundle\UiBundle\Block\BlockEventListener` branches sur des
+    # evenements SonataBlockBundle (`sonata.block.event.sylius.*`).
+    #
+    # Sylius 2 a supprime ce mecanisme, classe incluse, au profit de `sylius/twig-hooks`.
+    # Ces services etaient donc invalides par construction : `lint:container` echouait sur
+    # « class Sylius\Bundle\UiBundle\Block\BlockEventListener does not exist ».
+    #
+    # Ils ne sont pas portes vers des hooks car le projet a deja son propre affichage SEO :
+    #   - front  : composants Twig App\Twig\Components\*\StructuredData
+    #   - admin  : hooks `uh_seo` de config/packages/sylius_twig_hooks.yaml
+    #              (@SyliusAdmin/product/form/sections/uh_seo.html.twig, channel/...)
+    #
+    # Du plugin, le projet ne consomme que le modele de donnees SEO (Seo, SeoTranslation,
+    # SeoInterface, HasSeoInterface, SeoTrait, SeoType, SeoImageType), conserve ci-dessus.
+    #
+    # Templates devenus orphelins, laisses en place : _seo_block.html.twig,
+    # _structured_data.html.twig, _javascript.html.twig, Admin/Taxon/_seo_form.html.twig.
 
     joppedc_sylius_better_seo_plugin.listener.images_upload:
         class: JoppeDc\SyliusBetterSeoPlugin\EventListener\SeoTranslationImagesUploadListener
