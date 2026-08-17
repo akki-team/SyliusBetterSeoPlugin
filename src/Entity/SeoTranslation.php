@@ -54,6 +54,21 @@ class SeoTranslation extends AbstractTranslation implements ResourceInterface, S
      */
     private $extraTags;
 
+    /**
+     * @var string|null
+     */
+    private $robots;
+
+    /**
+     * @var string|null
+     */
+    private $canonical;
+
+    /**
+     * @var string|null
+     */
+    private $metaDescription;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,5 +161,36 @@ class SeoTranslation extends AbstractTranslation implements ResourceInterface, S
         }
 
         $this->image = $image;
+    }
+
+    public function getCanonical(): ?string
+    {
+        return $this->canonical;
+    }
+
+    public function setCanonical(?string $canonical): void
+    {
+        $this->canonical = $canonical;
+    }
+
+    public function getRobots(): ?string
+    {
+        return $this->robots;
+    }
+
+    public function setRobots(?string $robots): void
+    {
+        $this->robots = $robots;
+    }
+
+    public function getMetaDescription(): ?string
+    {
+        return $this->metaDescription;
+    }
+
+    public function setMetaDescription(?string $metaDescription): SeoTranslation
+    {
+        $this->metaDescription = $metaDescription;
+        return $this;
     }
 }

@@ -9,3 +9,7 @@ app:
         og_description: OG Beschreibung
         og_title: OG Titel
         extra_tags: Zusätzliche Meta-Tags
+        robots: Robots
+        canonical: URL canonique
+        meta_description_label: Méta description
+        meta_description_help: Ne saisir que le contenu de la balise méta

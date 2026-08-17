@@ -1,0 +1,7 @@
+
+sylius:
+    seo_translation:
+        meta_description:
+            max_length: La méta description ne doit pas dépasser {{ limit }} caractères.
+        extra_tags:
+            max_length: Les extra-tags ne doivent pas dépasser {{ limit }} caractères.

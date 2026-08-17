@@ -43,6 +43,10 @@ interface SeoInterface
 
     public function getImage(): ?SeoImageInterface;
 
+    public function getCanonical(): ?string;
+
+    public function getRobots(): ?string;
+
     /**
      * @return SeoTranslation
      */

@@ -9,4 +9,8 @@ app:
         og_description: Description Open Graph
         og_title: Titre Open Graph
         extra_tags: Extra tags
+        robots: Robots
+        canonical: URL canonique
+        meta_description_label: Méta description
+        meta_description_help: Ne saisir que le contenu de la balise méta
 
