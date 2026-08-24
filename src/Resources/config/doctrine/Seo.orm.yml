@@ -1,9 +1,0 @@
-JoppeDc\SyliusBetterSeoPlugin\Entity\Seo:
-    type: mappedSuperclass
-    table: joppedc_seo
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO

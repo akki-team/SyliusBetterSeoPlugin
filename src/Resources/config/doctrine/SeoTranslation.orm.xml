@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="JoppeDc\SyliusBetterSeoPlugin\Entity\SeoTranslation" table="joppedc_seo_translation">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="pageTitle" column="seo_page_title" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="ogTitle" column="seo_og_title" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="ogDescription" column="seo_og_description" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="twitterTitle" column="seo_twitter_title" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="twitterDescription" column="seo_twitter_description" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="twitterSite" column="seo_twitter_site" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="extraTags" column="seo_extra_tags" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="canonical" column="canonical" type="text" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="robots" column="robots" type="string" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="metaDescription" column="meta_description" type="string" length="2048" nullable="true">
+            <options>
+                <option name="default"></option>
+            </options>
+        </field>
+
+        <one-to-one field="image"
+                    target-entity="JoppeDc\SyliusBetterSeoPlugin\Entity\SeoImage"
+                    mapped-by="owner">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-one>
+    </mapped-superclass>
+
+</doctrine-mapping>
