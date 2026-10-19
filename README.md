@@ -17,12 +17,23 @@
   
 </p>
 
-## Installation 
+## Installation
+
+Sylius 2.x, PHP 8.2 to 8.5, Doctrine ORM 3.
 
 1. Require plugin with composer:
 
+    ```json
+    "repositories": {
+        "akkiSyliusBetterSeoPlugin": {
+            "type": "vcs",
+            "url": "https://github.com/akki-team/SyliusBetterSeoPlugin.git"
+        }
+    }
+    ```
+
     ```bash
-    composer require joppedc/sylius-better-seo-plugin:^1.0
+    composer require akki-team/sylius-better-seo-plugin:^2.1
     ```
 
 2. Add plugin class to your `bundles.php`.
@@ -31,15 +42,6 @@
     JoppeDc\SyliusBetterSeoPlugin\SyliusBetterSeoPlugin::class => ['all' => true],
     ```
 
-    or `appkernel.php`
-
-    ```php
-    $bundles = [
-       new \JoppeDc\SyliusBetterSeoPlugin\SyliusBetterSeoPlugin(),
-    ];
-    ```
-   
-
 3. Import resources:
 
     ```yaml
@@ -47,24 +49,34 @@
         - { resource: "@SyliusBetterSeoPlugin/Resources/config/config.yaml" }
     ```
 
-4. Override Product and Taxon resource:
-
-    You need to add `HasSeoInterface` and add `SeoTrait` to Product and Taxon entity.
+    To get the SEO section in the product and taxon admin forms (create and update), also import the Twig hooks:
 
     ```yaml
-    sylius_product:
-        resources:
-            product:
-                classes:
-                    model: App\Entity\Product
-    
-    sylius_taxonomy:
-        resources:
-            taxon:
-                classes:
-                    model: App\Entity\Taxon
+    imports:
+        - { resource: "@SyliusBetterSeoPlugin/Resources/config/twig_hooks.yaml" }
     ```
-   
+
+4. Override Product and Taxon resource:
+
+    Add `HasSeoInterface` and `SeoTrait` to the Product and Taxon entities, and map the `seo` association with attributes
+    (the trait's annotations are not read by Doctrine ORM 3):
+
+    ```php
+    #[ORM\OneToOne(targetEntity: SeoInterface::class, cascade: ['all'])]
+    #[ORM\JoinColumn(name: 'seo_id', referencedColumnName: 'id')]
+    protected $seo;
+    ```
+
+    `SeoInterface` is resolved to the configured model (`sylius_better_seo_plugin.seo`), which can be overridden:
+
+    ```yaml
+    sylius_resource:
+        resources:
+            sylius_better_seo_plugin.seo:
+                classes:
+                    model: App\Entity\Seo\Seo
+    ```
+
 5. Finish the installation by updating the database schema
 
     ```
