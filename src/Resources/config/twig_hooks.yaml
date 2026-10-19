@@ -1,0 +1,25 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.product.create.content.form.side_navigation':
+            seo: &product_side_navigation
+                template: '@SyliusBetterSeoPlugin/Admin/TwigHooks/product_side_navigation.html.twig'
+                priority: -100
+
+        'sylius_admin.product.update.content.form.side_navigation':
+            seo: *product_side_navigation
+
+        'sylius_admin.product.create.content.form.sections':
+            seo: &product_section
+                template: '@SyliusBetterSeoPlugin/Admin/TwigHooks/product_section.html.twig'
+                priority: -100
+
+        'sylius_admin.product.update.content.form.sections':
+            seo: *product_section
+
+        'sylius_admin.taxon.create.content.sections.form':
+            seo: &taxon_section
+                template: '@SyliusBetterSeoPlugin/Admin/TwigHooks/seo.html.twig'
+                priority: -100
+
+        'sylius_admin.taxon.update.content.sections.form':
+            seo: *taxon_section

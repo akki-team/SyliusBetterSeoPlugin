@@ -1,0 +1,9 @@
+{% block joppedc_sylius_better_seo_image_row %}
+    <div class="mb-3">
+        {{ form_row(form.type) }}
+        {% if form.vars.value.path|default(null) is not null %}
+            <img class="img-thumbnail mb-2" src="{{ form.vars.value.path|imagine_filter('sylius_small') }}" alt="{{ form.vars.value.type }}">
+        {% endif %}
+        {{ form_row(form.file) }}
+    </div>
+{% endblock %}
