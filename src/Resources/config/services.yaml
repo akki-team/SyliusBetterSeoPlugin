@@ -9,28 +9,23 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType, priority: -5 }
 
-    joppedc_sylius_better_seo_plugin.listener.admin.product.form.menu_builder:
-        class: JoppeDc\SyliusBetterSeoPlugin\Menu\AdminProductFormMenuListener
-        tags:
-            - { name: kernel.event_listener, event: sylius.menu.admin.product.form, method: addItems }
-
     joppedc_sylius_better_seo_plugin.seo.form.type:
         class: JoppeDc\SyliusBetterSeoPlugin\Form\Type\SeoType
         tags:
             - { name: form.type }
-        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\Seo', ['sylius']]
+        arguments: ['%sylius_better_seo_plugin.model.seo.class%', ['sylius']]
 
     joppedc_sylius_better_seo_plugin.seo_translation.form.type:
         class: JoppeDc\SyliusBetterSeoPlugin\Form\Type\SeoTranslationType
         tags:
             - { name: form.type }
-        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\SeoTranslation', ['sylius']]
+        arguments: ['%sylius_better_seo_plugin.model.seo_translation.class%', ['sylius']]
 
     joppedc_sylius_better_seo_plugin.seo_image.type.form.type:
         class: JoppeDc\SyliusBetterSeoPlugin\Form\Type\SeoImageType
         tags:
             - { name: form.type }
-        arguments: ['JoppeDc\SyliusBetterSeoPlugin\Entity\SeoImage', ['sylius']]
+        arguments: ['%sylius_better_seo_plugin.model.seo_image.class%', ['sylius']]
 
     # La couche d'affichage du plugin reposait sur les « template events » de Sylius 1 :
     # six services `Sylius\Bundle\UiBundle\Block\BlockEventListener` branches sur des
