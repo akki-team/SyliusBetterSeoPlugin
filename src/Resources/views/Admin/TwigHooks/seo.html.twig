@@ -1,0 +1,14 @@
+{% set form = hookable_metadata.context.form %}
+
+{% import '@SyliusAdmin/shared/helper/translations.html.twig' as translations %}
+
+{% form_theme form.seo '@SyliusBetterSeoPlugin/Admin/TwigHooks/form_theme.html.twig' %}
+
+<div class="card mb-3" {{ sylius_test_html_attribute('seo') }}>
+    <div class="card-header">
+        <h2 class="card-title">{{ 'app.ui.seo'|trans }}</h2>
+    </div>
+    <div class="card-body">
+        {{ translations.default(form.seo.translations, null, {accordion_id: 'better-seo-translations'}) }}
+    </div>
+</div>
